@@ -29,6 +29,16 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
+            'logradouro' => fake()->streetName(),
+            'numero' => fake()->randomNumber(3), // Foi o que serviu
+            'bairro' => fake()->city() . ' - ' . fake()->streetName(), // Improvisado também
+            'city' => fake()->city(),
+            'state' => fake()->lexify('??'), // Gambiarra
+            'cep' => fake()->postcode(),
+            'country' => fake()->country(),
+            'phone' => fake()->phoneNumber(),
+            'birth_date' => fake()->date(),
+            'cpf' => fake()->numberBetween(100000000, 999999999), // Gambiarra
         ];
     }
 
