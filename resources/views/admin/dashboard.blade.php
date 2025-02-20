@@ -16,13 +16,13 @@
                 @foreach ($products as $product)
                 <div class="bg-white shadow-sm rounded-lg p-4 text-gray-900 w-64 h-[400px] flex flex-col">
                     <!-- Imagem clicável -->
-                    <a href="{{ route('produto.show', ['id' => $product->id]) }}">
+                    <a href="{{ route('admin.produto.show', ['id' => $product->id]) }}">
                         <img src="{{ asset($product->img_path) }}" alt="{{ $product->name }}" class="w-full h-60 object-cover rounded-lg">
                     </a>
 
                     <div class="text-center mt-3 flex-grow">
                         <!-- Título clicável -->
-                        <a href="{{ route('produto.show', ['id' => $product->id]) }}" class="text-lg font-semibold hover:underline">
+                        <a href="{{ route('admin.produto.show', ['id' => $product->id]) }}" class="text-lg font-semibold hover:underline">
                             {{ $product->name }}
                         </a>
                         <div class="mt-2">
@@ -35,14 +35,6 @@
                         </div>
                     </div>
 
-                    <div class="flex justify-center mt-auto">
-                        <button class="bg-blue-600 text-white px-3 py-2 rounded-lg flex items-center hover:bg-blue-700">
-                            <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 5m12 0a2 2 0 100-4 2 2 0 000 4zm-10 0a2 2 0 100-4 2 2 0 000 4z"></path>
-                            </svg>
-                            Comprar
-                        </button>
-                    </div>
                 </div>
                 @endforeach
 
@@ -75,5 +67,3 @@
 
     </div>
 </x-app-layout>
-
-
