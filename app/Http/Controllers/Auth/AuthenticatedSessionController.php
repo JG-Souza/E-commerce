@@ -16,6 +16,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): View | RedirectResponse
     {
+        // Para evitar o Ping Pong? Revisar no treinamento
         if(Auth::guard('admin')->check())
             return redirect()->route('admin.dashboard');
         return view('auth.login');
@@ -50,6 +51,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('/login');
     }
 }

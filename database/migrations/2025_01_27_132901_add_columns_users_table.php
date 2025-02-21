@@ -66,6 +66,7 @@ return new class extends Migration
             $table->id();
             $table->dateTime('date');
             $table->decimal('total_value', 8, 2);
+            $table->enum('status', ['pending', 'completed'])->defaul('pending');
             $table->timestamps();
         });
 
@@ -78,10 +79,10 @@ return new class extends Migration
         });
 
         Schema::create('relation_transaction_users', function (Blueprint $table) {
+            $table->id(); // Cria a coluna 'id' como chave primária auto-incrementável
             $table->foreignId('transactions_id')->constrained('transactions')->onDelete('cascade');
             $table->foreignId('users_id')->constrained('users')->onDelete('cascade');
             $table->string('role', 45);
-            $table->primary(['transactions_id', 'users_id']); // Preciso entender melhor essa linha
         });
     }
 

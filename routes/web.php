@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CartController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -41,4 +42,8 @@ Route::prefix('admin')->group(function () {
     });
 
 // Preciso entender melhor o funcionamento do método middleware
+
+Route::get('/cart', [CartController::class, 'index'])->name('cart');
+
+Route::post('/cart/add/{productId}', [CartController::class, 'addToCart'])->name('cart.add');
 

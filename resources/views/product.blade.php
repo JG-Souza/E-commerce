@@ -31,14 +31,16 @@
 
                     <!-- Botão de adicionar ao carrinho e estoque com menos espaçamento -->
                     <div class="flex items-center gap-3">
-                        <form>
+                        <form action="{{ route('cart.add', $product->id) }}" method="POST">
                             @csrf
+                            <input type="hidden" name="Produtos">
+
                             <button type="submit"
                                     class="bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md flex items-center gap-2 hover:bg-blue-700 transition">
                                 <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 5m12 0a2 2 0 100-4 2 2 0 000 4zm-10 0a2 2 0 100-4 2 2 0 000 4z"></path>
                                 </svg>
-                                <span>Comprar</span>
+                                <span>Adicionar</span>
                             </button>
                         </form>
 

@@ -45,4 +45,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function transactions()
+    {
+        return $this->belongsToMany(Transaction::class, 'relation_transaction_users', 'user_id', 'transaction_id');
+    }
 }

@@ -36,12 +36,15 @@
                     </div>
 
                     <div class="flex justify-center mt-auto">
-                        <button class="bg-blue-600 text-white px-3 py-2 rounded-lg flex items-center hover:bg-blue-700">
-                            <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 5m12 0a2 2 0 100-4 2 2 0 000 4zm-10 0a2 2 0 100-4 2 2 0 000 4z"></path>
-                            </svg>
-                            Comprar
-                        </button>
+                        <form action="{{ route('cart.add', $product->id) }}" method="POST">
+                        @csrf
+                            <button type="submit" class="bg-blue-600 text-white px-3 py-2 rounded-lg flex items-center hover:bg-blue-700">
+                                <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 5m12 0a2 2 0 100-4 2 2 0 000 4zm-10 0a2 2 0 100-4 2 2 0 000 4z"></path>
+                                </svg>
+                                Adicionar
+                            </button>
+                        </form>
                     </div>
                 </div>
                 @endforeach
