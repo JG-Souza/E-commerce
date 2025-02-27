@@ -36,8 +36,6 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('admin'),
         ]);
 
-        Product::factory()->create([
-            'name' => 'O Grande Gatsby'
-        ]);
+        Product::factory(20)->create();
     }
 }

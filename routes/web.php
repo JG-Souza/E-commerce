@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PagSeguroController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
@@ -41,9 +42,15 @@ Route::prefix('admin')->group(function () {
         ->name('admin.produto.show');
     });
 
-// Preciso entender melhor o funcionamento do método middleware
-
 Route::get('/cart', [CartController::class, 'index'])->name('cart');
 
 Route::post('/cart/add/{productId}', [CartController::class, 'addToCart'])->name('cart.add');
 
+Route::get('/erro-pagamento', [CartController::class, 'purchaseError']);
+
+
+Route::post('/checkout', [PagSeguroController::class, 'createCheckout']);
+
+Route::get('/products/search', [ProductController::class, 'search'])->name('products.search');
+
+Route::get('/users/gerenciamento', [UserController::class, 'gerenciamento'])->name('users.gerenciamento');

@@ -11,9 +11,15 @@
                 <h3 class="text-2xl font-semibold text-gray-800">{{ $product->name }}</h3>
                 <p class="text-gray-700 mt-3">{{ $product->description }}</p>
 
-                <!-- Categoria logo após a descrição -->
-                <div class="mt-3 mb-20">
+                <div class="mt-3">
                     <span class="text-sm text-gray-500">Categoria: <strong>{{ $product->category }}</strong></span>
+                </div>
+
+                <div class="mt-1">
+                    <span class="text-sm text-gray-500">Anunciante: <strong>{{ $product->user->name }}</strong></span>
+                </div>
+                <div class="mt-1 mb-20">
+                    <span class="text-sm text-gray-500">Telefone: <strong>{{ $product->user->phone }}</strong></span>
                 </div>
 
                 <!-- Seção final: preço, botão e estoque -->
@@ -28,12 +34,11 @@
                         </span>
                     </div>
 
-
-                    <!-- Botão de adicionar ao carrinho e estoque com menos espaçamento -->
-                    <div class="flex items-center gap-3">
-                        <form action="{{ route('cart.add', $product->id) }}" method="POST">
+                    <!-- Botão de adicionar ao carrinho e dropdown de quantidade -->
+                        <form action="{{ route('cart.add', $product->id) }}" method="POST" class="flex items-center gap-3 flex-row">
                             @csrf
-                            <input type="hidden" name="Produtos">
+
+
 
                             <button type="submit"
                                     class="bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md flex items-center gap-2 hover:bg-blue-700 transition">
@@ -42,19 +47,17 @@
                                 </svg>
                                 <span>Adicionar</span>
                             </button>
+
+                             <!-- Dropdown para selecionar quantidade -->
+                             <select name="quantity" id="quantity" class="bg-white border text-sm px-4 py-2 rounded-lg">
+                             <option value="" disabled selected>Quantidade</option> <!-- Placeholder -->
+                                @for ($i = 1; $i <= $product->quantity; $i++)
+                                    <option value="{{ $i }}">{{ $i }}</option>
+                                @endfor
+                            </select>
                         </form>
-
-                        <!-- Quantidade em estoque -->
-                        <span class="text-gray-600 text-lg">Estoque: <strong>{{ $product->quantity }}</strong></span>
-                    </div>
-
                 </div>
             </div>
         </div>
     </div>
 </x-app-layout>
-
-
-
-
-

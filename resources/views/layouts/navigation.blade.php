@@ -61,6 +61,11 @@
                                 {{ __('Log Out') }}
                             </x-dropdown-link>
                         </form>
+
+                        <x-dropdown-link :href="route('users.gerenciamento')">
+                            Gerenciamento de Usuários
+                        </x-dropdown-link>
+
                     </x-slot>
                 </x-dropdown>
             </div>

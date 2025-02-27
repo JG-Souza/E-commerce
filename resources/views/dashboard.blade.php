@@ -1,11 +1,25 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex justify-center items-center mb-4">
-            <div class="flex gap-2 w-full max-w-3xl">
-                <input type="text" placeholder="Pesquisar..." class="border w-full rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <button class="bg-black text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-600">Filtros</button>
+        <form method="GET" action="{{ route('products.search') }}" class="flex justify-center items-center mb-4 rounded-lg">
+            <select name="categoria" id="categoria" class="bg-blue-600 text-white px-3 py-2 text-sm border-r">
+                <option value="" disabled selected>Categoria</option> <!-- Placeholder -->
+                <option value="Aventura">Aventura</option>
+                <option value="Romance">Romance</option>
+                <option value="Ficcao">Ficção</option>
+                <option value="Anime">Anime</option>
+                <option value="Classico">Clássico</option>
+            </select>
+
+            <div class="flex w-full max-w-3xl">
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="Pesquisar..."
+                    class="flex-grow text-black px-3 py-2 text-sm focus:outline-none">
+                <button type="submit" class="bg-blue-600 text-white px-4 py-2 flex items-center justify-center">
+                    <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M16 10a6 6 0 1 0-12 0 6 6 0 0 0 12 0z"></path>
+                    </svg>
+                </button>
             </div>
-        </div>
+        </form>
     </x-slot>
 
     <div class="py-8">
@@ -54,28 +68,9 @@
 
         <!-- Inicio da Paginação -->
         <div class="flex justify-center mt-12">
-            <ul class="flex items-center space-x-2">
-                <li>
-                    <a href="#" class="px-3 py-2 border rounded-lg text-gray-600 hover:bg-gray-200">Anterior</a>
-                </li>
-
-                <li>
-                    <a href="#" class="px-3 py-2 border rounded-lg bg-blue-600 text-white">1</a>
-                </li>
-                <li>
-                    <a href="#" class="px-3 py-2 border rounded-lg text-gray-600 hover:bg-gray-200">2</a>
-                </li>
-                <li>
-                    <a href="#" class="px-3 py-2 border rounded-lg text-gray-600 hover:bg-gray-200">3</a>
-                </li>
-
-                <li>
-                    <a href="#" class="px-3 py-2 border rounded-lg text-gray-600 hover:bg-gray-200">Próximo</a>
-                </li>
-            </ul>
+            {{ $products->links('vendor.pagination.tailwind') }}
         </div>
         <!-- Fim da Paginação -->
-
     </div>
 </x-app-layout>
 

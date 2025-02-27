@@ -9,8 +9,13 @@ class Product extends Model
 {
     use HasFactory;
 
-    // Colunas. Preciso entender melhor o HasFactory
     protected $fillable = [
         'name', 'unit_price', 'quantity', 'description', 'category', 'img_path'
     ];
+
+    public function user()
+{
+    return $this->belongsTo(User::class, 'users_id');
+}
+
 }

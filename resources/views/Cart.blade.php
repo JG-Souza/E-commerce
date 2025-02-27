@@ -24,7 +24,12 @@
 
     <div class="mt-8 flex justify-between items-center">
         <span class="text-2xl font-bold">Total: R$ {{ number_format($transaction->total_value, 2, ',', '.') }}</span>
-        <button class="bg-green-500 text-white px-8 py-3 rounded hover:bg-green-600">Comprar</button>
+        <form action="/checkout" method="post">
+            @csrf
+            <input type="hidden" name="cartItems" value="{{ json_encode($cartItems) }}">
+            <button type="submit" class="bg-green-500 text-white px-8 py-3 rounded hover:bg-green-600">Comprar</button>
+        </form>
+
     </div>
 </div>
 @else

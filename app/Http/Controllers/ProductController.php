@@ -13,8 +13,10 @@ class ProductController extends Controller
     {
         $userId = Auth::guard('web')->id();
 
-        $products = Product::where('users_id', '!=', $userId)->get();
-        
+        $products = Product::where('users_id', '!=', $userId)
+        ->where('quantity', '>', 0)
+        ->paginate(12);
+
         if (request()->is('admin/*')) // Indica que a rota deve começar com admin/ e pode ser seguida de qualquer coisa
             return view('admin.dashboard', compact('products'));
 
@@ -30,5 +32,24 @@ class ProductController extends Controller
             return view('admin.product', compact('product'));
 
         return view('product', compact('product'));
+    }
+
+    public function search(Request $request)
+    {
+        $searchTerm = $request->input('search');
+        $category = $request->input('categoria');
+
+        $products = Product::query()
+        ->where('quantity', '>', 0);
+
+        if($searchTerm)
+            $products = $products->where('name', 'like',  '%' . $searchTerm . '%');
+
+        if($category)
+            $products = $products->where('category', $category);
+
+        $products = $products->paginate(12)->appends($request->query()); // Mantém os parâmetros na paginação
+
+        return view('dashboard', compact('products'));
     }
 }

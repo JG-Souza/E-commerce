@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('phone', 20);
             $table->dateTime('birth_date')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->char('cpf', 11)->unique();
-            $table->integer('balance')->default(0);
+            $table->decimal('balance', 6, 2)->default(0);
             $table->string('img_path', 255)->nullable();
         });
 

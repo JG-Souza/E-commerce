@@ -11,9 +11,15 @@
                 <h3 class="text-2xl font-semibold text-gray-800">{{ $product->name }}</h3>
                 <p class="text-gray-700 mt-3">{{ $product->description }}</p>
 
-                <!-- Categoria logo após a descrição -->
-                <div class="mt-3 mb-20">
+                <div class="mt-3">
                     <span class="text-sm text-gray-500">Categoria: <strong>{{ $product->category }}</strong></span>
+                </div>
+
+                <div class="mt-1">
+                    <span class="text-sm text-gray-500">Anunciante: <strong>{{ $product->user->name }}</strong></span>
+                </div>
+                <div class="mt-1 mb-20">
+                    <span class="text-sm text-gray-500">Telefone: <strong>{{ $product->user->phone }}</strong></span>
                 </div>
 
                 <!-- Seção final: preço, botão e estoque -->
@@ -31,7 +37,7 @@
 
                     <!-- Botão de adicionar ao carrinho e estoque com menos espaçamento -->
                     <div class="flex items-center gap-3">
-    
+
 
                         <!-- Quantidade em estoque -->
                         <span class="text-gray-600 text-lg">Estoque: <strong>{{ $product->quantity }}</strong></span>
@@ -42,3 +48,5 @@
         </div>
     </div>
 </x-app-layout>
+
+

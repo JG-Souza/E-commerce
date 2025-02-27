@@ -32,6 +32,7 @@ class CartController extends Controller
     {
         $user = Auth::user();
         $product = Product::findOrFail($productId);
+        $quantity = $request->input('quantity', 1);  // Obtém a quantidade selecionada, padrão é 1
 
         // Verifica se o usuário já tem um carrinho
         $transaction = Transaction::where('status', 'pending')
@@ -60,14 +61,14 @@ class CartController extends Controller
 
         if ($cartItem) {
             // Se o produto já está no carrinho, incrementa a quantidade
-            $cartItem->quantity += 1;
+            $cartItem->quantity += $quantity;
             $cartItem->total_value = $cartItem->quantity * $product->unit_price;
             $cartItem->save(); // Método do Eloquent que salva no banco de dados
         } else {
             // Se o produto não está no carrinho, adiciona uma unidade
             TransactionItem::create([
-                'quantity' => 1,
-                'total_value' => $product->unit_price,
+                'quantity' => $quantity,
+                'total_value' => $product->unit_price * $quantity,
                 'products_id' => $product->id,
                 'transactions_id' => $transaction->id
             ]);
@@ -78,5 +79,10 @@ class CartController extends Controller
         $transaction->save();
 
         return redirect()->route('cart')->with('message', 'Produto adicionado ao carrinho!');
+    }
+
+    public function purchaseError()
+    {
+        return "oi";
     }
 }
