@@ -61,10 +61,11 @@
                                 {{ __('Log Out') }}
                             </x-dropdown-link>
                         </form>
-
-                        <x-dropdown-link :href="route('users.gerenciamento')">
-                            Gerenciamento de Usuários
-                        </x-dropdown-link>
+                        @if(Auth::guard('admin')->check())
+                            <x-dropdown-link :href="route('users.gerenciamento')">
+                                Gerenciamento de Usuários
+                            </x-dropdown-link>
+                        @endif
 
                     </x-slot>
                 </x-dropdown>
