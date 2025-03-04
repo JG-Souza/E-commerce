@@ -62,7 +62,7 @@
                             </x-dropdown-link>
                         </form>
                         @if(Auth::guard('admin')->check())
-                            <x-dropdown-link :href="route('users.gerenciamento')">
+                            <x-dropdown-link :href="route('users.index')">
                                 Gerenciamento de Usuários
                             </x-dropdown-link>
                         @endif
