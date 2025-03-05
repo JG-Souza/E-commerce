@@ -106,3 +106,7 @@ Route::post('/admins', [AdminController::class, 'store'])
 Route::delete('/admins/{admin}', [AdminController::class, 'destroy'])
 ->middleware(AdminMiddleware::class)
 ->name('admins.destroy');
+
+Route::post('/withdraw', [ProfileController::class, 'withdraw'])
+->middleware(['auth', 'verified'])
+->name('users.withdraw');

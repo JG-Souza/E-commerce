@@ -72,4 +72,17 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+    public function withdraw(Request $request)
+    {
+        $validated = $request->validate([
+            'withdraw_amount' => ['required', 'numeric', 'min:1', 'max:' .auth()->user()->balance],
+        ]);
+
+        $user = auth()->user();
+        $user->balance -= $validated['withdraw_amount'];
+        $user->save();
+
+        return back()->with('status', 'Saque realizado com sucesso!');
+    }
 }
