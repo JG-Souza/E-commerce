@@ -30,6 +30,8 @@ class Admin extends Authenticatable
         'phone',
         'birth_date',
         'cpf',
+        'img_path',
+        'created_by',
     ];
 
     /**
@@ -54,6 +56,11 @@ class Admin extends Authenticatable
             'password' => 'hashed',
             'birth_date' => 'date',
         ];
+    }
+
+    public function creator()
+    {
+        return $this->belongsTo(Admin::class, 'created_by');
     }
 }
 

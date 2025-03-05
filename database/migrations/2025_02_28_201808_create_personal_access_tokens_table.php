@@ -21,6 +21,10 @@ return new class extends Migration
             $table->timestamp('expires_at')->nullable();
             $table->timestamps();
         });
+
+        Schema::table('admins', function (Blueprint $table) {
+            $table->foreignId('created_by')->nullable()->constrained('admins')->onDelete('set null');
+        });
     }
 
     /**

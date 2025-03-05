@@ -19,6 +19,12 @@ class AdminFactory extends Factory
      */
     public function definition(): array
     {
+
+        $directory = public_path('storage/products');
+
+        $files = glob($directory . '/*.{jpg,jpeg,png,webp}', GLOB_BRACE);
+        $imagePath = $files ? 'storage/images/' . basename($this->faker->randomElement($files)) : null;
+
         return [
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
@@ -35,6 +41,7 @@ class AdminFactory extends Factory
             'phone' => $this->faker->phoneNumber(),
             'birth_date' => $this->faker->date(),
             'cpf' => $this->faker->numberBetween(100000000, 999999999),
+            'img_path' => $imagePath
         ];
     }
 }

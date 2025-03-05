@@ -46,7 +46,7 @@ return new class extends Migration
             $table->string('phone', 20);
             $table->dateTime('birth_date')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->char('cpf', 11)->unique();
-            $table->string('img_path', 255)->nullable();
+            $table->string('img_path', 255);
         });
 
         Schema::create('products', function (Blueprint $table) {

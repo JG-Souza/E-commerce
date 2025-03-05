@@ -47,9 +47,15 @@
                     </x-slot>
 
                     <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
-                        </x-dropdown-link>
+                        @if(Auth::guard('admin')->check())
+                            <x-dropdown-link :href="route('admin.profile.edit')">
+                                {{ __('Profile') }}
+                            </x-dropdown-link>
+                        @else
+                            <x-dropdown-link :href="route('profile.edit')">
+                                {{ __('Profile') }}
+                            </x-dropdown-link>
+                        @endif
 
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
@@ -64,6 +70,12 @@
                         @if(Auth::guard('admin')->check())
                             <x-dropdown-link :href="route('users.index')">
                                 Gerenciamento de Usuários
+                            </x-dropdown-link>
+                        @endif
+
+                        @if(Auth::guard('admin')->check())
+                            <x-dropdown-link :href="route('admins.index')">
+                                Gerenciamento de Administradores
                             </x-dropdown-link>
                         @endif
 

@@ -2,12 +2,21 @@
 
 namespace App\Http\Requests;
 
-use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
+use App\Models\Admin;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
-class ProfileUpdateRequest extends FormRequest
+class AdminProfileUpdateRequest extends FormRequest
 {
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {
+        return Auth::guard('admin')->check(); // Permite apenas se o admin estiver autenticado
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -23,7 +32,7 @@ class ProfileUpdateRequest extends FormRequest
                 'lowercase',
                 'email',
                 'max:255',
-                Rule::unique(User::class)->ignore($this->user()->id),
+                Rule::unique(Admin::class)->ignore(Auth::guard('admin')->user()->id), // Usando o guard 'admin'
             ],
             'password' => ['nullable', 'string', 'confirmed'],
             'logradouro' => ['required', 'string', 'max:255'],
@@ -35,9 +44,8 @@ class ProfileUpdateRequest extends FormRequest
             'country' => ['required', 'string', 'max:255'],
             'phone' => ['required', 'string', 'max:15'],
             'birth_date' => ['required', 'date', 'before:today'], // Data de nascimento obrigatória e precisa ser antes de hoje
-            'cpf' => ['required', 'string', Rule::unique(User::class)->ignore($this->user()->id)],
-            'balance' => ['nullable', 'numeric', 'min:0'], // Saldo opcional, mas não pode ser negativo
-            'img_path' => ['nullable', 'image', 'mimes:jpg,jpeg,png,gif', 'max:2048'], // Avatar opcional, apenas JPEG/PNG, até 2MB
+            'cpf' => ['required', 'string', Rule::unique(Admin::class)->ignore(Auth::guard('admin')->user()->id)], // Usando o guard 'admin'
+            'img_path' => ['image', 'mimes:jpg,jpeg,png,gif', 'max:2048'],
         ];
     }
 }
