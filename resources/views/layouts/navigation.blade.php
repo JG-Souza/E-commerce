@@ -57,16 +57,11 @@
                             </x-dropdown-link>
                         @endif
 
-                        <!-- Authentication -->
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
 
-                            <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-                                {{ __('Log Out') }}
-                            </x-dropdown-link>
-                        </form>
+
+
+
+
                         @if(Auth::guard('admin')->check())
                             <x-dropdown-link :href="route('users.index')">
                                 Gerenciamento de Usuários
@@ -78,6 +73,27 @@
                                 Gerenciamento de Administradores
                             </x-dropdown-link>
                         @endif
+
+                        @if(Auth::guard('admin')->check())
+                            <x-dropdown-link :href="route('admin.index.products')">
+                                {{ __('Gerenciamento de Produtos') }}
+                            </x-dropdown-link>
+                        @else
+                            <x-dropdown-link :href="route('index.products')">
+                                {{ __('Seus Produtos') }}
+                            </x-dropdown-link>
+                        @endif
+
+                        <!-- Authentication -->
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+
+                            <x-dropdown-link :href="route('logout')"
+                                    onclick="event.preventDefault();
+                                                this.closest('form').submit();">
+                                {{ __('Log Out') }}
+                            </x-dropdown-link>
+                        </form>
 
                     </x-slot>
                 </x-dropdown>

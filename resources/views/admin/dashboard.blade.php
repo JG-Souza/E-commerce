@@ -31,7 +31,7 @@
                 <div class="bg-white shadow-sm rounded-lg p-4 text-gray-900 w-64 h-[400px] flex flex-col">
                     <!-- Imagem clicável -->
                     <a href="{{ route('admin.produto.show', ['id' => $product->id]) }}">
-                        <img src="{{ asset($product->img_path) }}" alt="{{ $product->name }}" class="w-full h-60 object-cover rounded-lg">
+                        <img src="{{ asset('storage/' . $product->img_path) }}" alt="{{ $product->name }}" class="w-full h-60 object-cover rounded-lg">
                     </a>
 
                     <div class="text-center mt-3 flex-grow">
