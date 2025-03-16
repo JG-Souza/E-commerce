@@ -44,13 +44,12 @@
                             <img src="{{ asset('storage/img.jpg') }}" alt="Imagem Padrão" class="w-24 h-24 rounded-full border">
                         @endif
 
-
-
                         <p><strong>Nome:</strong> {{ $product->name }}</p>
                         <p><strong>Descrição:</strong> {{ $product->description }}</p>
                         <p><strong>Categoria:</strong> {{ $product->category }}</p>
                         <p><strong>Preço Unitário:</strong> {{ $product->unit_price }}</p>
                         <p><strong>Quantidade:</strong> {{ $product->quantity }}</p>
+                        <p><strong>Criado por:</strong> {{ $product->user->name }}</p>
                         <button onclick="document.getElementById('modalView-{{ $product->id }}').close()" class="px-4 py-2 bg-blue-500 text-white rounded">Fechar</button>
                     </dialog>
 
