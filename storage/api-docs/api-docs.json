@@ -1,52 +1,60 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "CRUD Ecommerce API",
-        "contact": {
-            "email": "joaogabriel.souza@codejr.com.br"
-        },
+        "title": "API Documentation",
         "version": "1.0"
     },
     "paths": {
-        "/api/user": {
+        "/api/users": {
             "get": {
                 "tags": [
-                    "User"
+                    "Users"
                 ],
                 "summary": "Listar usuários",
-                "description": "Retorna uma lista paginada de usuários.",
-                "operationId": "ef3192335324c07faff67807a2e8a2f8",
+                "description": "Retorna uma lista de usuários com nome e imagem de perfil.",
+                "operationId": "showUsers",
                 "parameters": [
                     {
                         "name": "page",
                         "in": "query",
-                        "description": "Número da página.",
+                        "description": "Número da página de resultados.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "default": 1
+                            "example": 1
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Lista de usuários",
+                        "description": "Lista de usuários com a imagem de perfil.",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "total_pages": {
+                                            "type": "integer",
+                                            "example": 4
+                                        },
                                         "users": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/components/schemas/User"
+                                                "properties": {
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "John Doe"
+                                                    },
+                                                    "img_path": {
+                                                        "type": "string",
+                                                        "example": "/files/default-photo.png"
+                                                    }
+                                                },
+                                                "type": "object"
                                             }
-                                        },
-                                        "total_pages": {
-                                            "type": "integer"
-                                        },
-                                        "status": {
-                                            "type": "integer",
-                                            "example": 200
                                         }
                                     },
                                     "type": "object"
@@ -55,156 +63,18 @@
                         }
                     },
                     "400": {
-                        "description": "Erro na requisição",
+                        "description": "Parâmetro de página ausente ou inválido.",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "message": {
-                                            "type": "string"
-                                        },
-                                        "status": {
-                                            "type": "integer",
-                                            "example": 400
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "post": {
-                "tags": [
-                    "User"
-                ],
-                "summary": "Criar novo usuário",
-                "description": "Cria um novo usuário na base de dados.",
-                "operationId": "287bc3ec931e652c54bb2ddb777040bc",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "name",
-                                    "email",
-                                    "password",
-                                    "logradouro",
-                                    "numero",
-                                    "bairro",
-                                    "city",
-                                    "state",
-                                    "cep",
-                                    "country",
-                                    "phone",
-                                    "birth_date",
-                                    "cpf"
-                                ],
-                                "properties": {
-                                    "name": {
-                                        "type": "string"
-                                    },
-                                    "email": {
-                                        "type": "string"
-                                    },
-                                    "password": {
-                                        "type": "string"
-                                    },
-                                    "logradouro": {
-                                        "type": "string"
-                                    },
-                                    "numero": {
-                                        "type": "string"
-                                    },
-                                    "bairro": {
-                                        "type": "string"
-                                    },
-                                    "city": {
-                                        "type": "string"
-                                    },
-                                    "state": {
-                                        "type": "string"
-                                    },
-                                    "cep": {
-                                        "type": "string"
-                                    },
-                                    "country": {
-                                        "type": "string"
-                                    },
-                                    "phone": {
-                                        "type": "string"
-                                    },
-                                    "birth_date": {
-                                        "type": "string"
-                                    },
-                                    "cpf": {
-                                        "type": "string"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Usuário criado com sucesso",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string"
-                                        },
-                                        "user": {
-                                            "$ref": "#/components/schemas/User"
-                                        },
-                                        "status": {
-                                            "type": "integer",
-                                            "example": 200
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Erro de validação",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string"
-                                        },
                                         "status": {
                                             "type": "integer",
                                             "example": 400
                                         },
-                                        "errors": {
-                                            "type": "object"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Erro interno do servidor",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
                                         "message": {
-                                            "type": "string"
-                                        },
-                                        "status": {
-                                            "type": "integer",
-                                            "example": 500
+                                            "type": "string",
+                                            "example": "Parâmetro de página inválido."
                                         }
                                     },
                                     "type": "object"
@@ -215,38 +85,56 @@
                 }
             }
         },
-        "/api/user/{id}": {
+        "/api/admins": {
             "get": {
                 "tags": [
-                    "User"
+                    "Admins"
                 ],
-                "summary": "Detalhes do usuário",
-                "description": "Retorna os detalhes de um usuário específico.",
-                "operationId": "430618624b90f3b94e90e86921470fdd",
+                "summary": "Listar administradores",
+                "description": "Retorna uma lista de administradores com nome e imagem de perfil.",
+                "operationId": "showAdmins",
                 "parameters": [
                     {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID do usuário",
+                        "name": "page",
+                        "in": "query",
+                        "description": "Número da página de resultados.",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "type": "integer",
+                            "example": 1
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Detalhes do usuário",
+                        "description": "Lista de administradores com a imagem de perfil.",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "user": {
-                                            "$ref": "#/components/schemas/User"
-                                        },
                                         "status": {
                                             "type": "integer",
                                             "example": 200
+                                        },
+                                        "total_pages": {
+                                            "type": "integer",
+                                            "example": 4
+                                        },
+                                        "admins": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "Admin Name"
+                                                    },
+                                                    "img_path": {
+                                                        "type": "string",
+                                                        "example": "/files/default-photo.png"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
                                         }
                                     },
                                     "type": "object"
@@ -254,18 +142,19 @@
                             }
                         }
                     },
-                    "202": {
-                        "description": "Usuário não encontrado",
+                    "400": {
+                        "description": "Parâmetro de página ausente ou inválido.",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "message": {
-                                            "type": "string"
-                                        },
                                         "status": {
                                             "type": "integer",
-                                            "example": 202
+                                            "example": 400
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Parâmetro de página inválido."
                                         }
                                     },
                                     "type": "object"
@@ -274,286 +163,17 @@
                         }
                     }
                 }
-            },
-            "put": {
-                "tags": [
-                    "User"
-                ],
-                "summary": "Atualizar usuário",
-                "description": "Atualiza um usuário existente.",
-                "operationId": "479f33f268cca6dba677c396b495b60d",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID do usuário",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "name",
-                                    "email",
-                                    "password",
-                                    "logradouro",
-                                    "numero",
-                                    "bairro",
-                                    "city",
-                                    "state",
-                                    "cep",
-                                    "country",
-                                    "phone",
-                                    "birth_date",
-                                    "cpf"
-                                ],
-                                "properties": {
-                                    "name": {
-                                        "type": "string"
-                                    },
-                                    "email": {
-                                        "type": "string"
-                                    },
-                                    "password": {
-                                        "type": "string"
-                                    },
-                                    "logradouro": {
-                                        "type": "string"
-                                    },
-                                    "numero": {
-                                        "type": "string"
-                                    },
-                                    "bairro": {
-                                        "type": "string"
-                                    },
-                                    "city": {
-                                        "type": "string"
-                                    },
-                                    "state": {
-                                        "type": "string"
-                                    },
-                                    "cep": {
-                                        "type": "string"
-                                    },
-                                    "country": {
-                                        "type": "string"
-                                    },
-                                    "phone": {
-                                        "type": "string"
-                                    },
-                                    "birth_date": {
-                                        "type": "string"
-                                    },
-                                    "cpf": {
-                                        "type": "string"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Usuário atualizado com sucesso",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string"
-                                        },
-                                        "user": {
-                                            "$ref": "#/components/schemas/User"
-                                        },
-                                        "status": {
-                                            "type": "integer",
-                                            "example": 200
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Usuário não encontrado",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string"
-                                        },
-                                        "status": {
-                                            "type": "integer",
-                                            "example": 404
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "User"
-                ],
-                "summary": "Deletar usuário",
-                "description": "Deleta um usuário existente.",
-                "operationId": "fb7c6cd121c930b66eefc7569b0f0ab3",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID do usuário",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Usuário deletado com sucesso",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string"
-                                        },
-                                        "status": {
-                                            "type": "integer",
-                                            "example": 200
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Usuário não encontrado",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string"
-                                        },
-                                        "status": {
-                                            "type": "integer",
-                                            "example": 404
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    },
-    "components": {
-        "schemas": {
-            "User": {
-                "properties": {
-                    "id": {
-                        "description": "User ID",
-                        "type": "integer"
-                    },
-                    "name": {
-                        "description": "User's name",
-                        "type": "string"
-                    },
-                    "email": {
-                        "description": "User's email",
-                        "type": "string"
-                    },
-                    "password": {
-                        "description": "User's password",
-                        "type": "string"
-                    },
-                    "logradouro": {
-                        "description": "User's address (street)",
-                        "type": "string"
-                    },
-                    "numero": {
-                        "description": "User's address (number)",
-                        "type": "string"
-                    },
-                    "bairro": {
-                        "description": "User's neighborhood",
-                        "type": "string"
-                    },
-                    "city": {
-                        "description": "User's city",
-                        "type": "string"
-                    },
-                    "state": {
-                        "description": "User's state",
-                        "type": "string"
-                    },
-                    "cep": {
-                        "description": "User's postal code",
-                        "type": "string"
-                    },
-                    "country": {
-                        "description": "User's country",
-                        "type": "string"
-                    },
-                    "phone": {
-                        "description": "User's phone number",
-                        "type": "string"
-                    },
-                    "birth_date": {
-                        "description": "User's birth date",
-                        "type": "string",
-                        "format": "date"
-                    },
-                    "cpf": {
-                        "description": "User's CPF (Brazilian identification)",
-                        "type": "string"
-                    },
-                    "created_at": {
-                        "description": "Timestamp when the user was created",
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "updated_at": {
-                        "description": "Timestamp when the user was last updated",
-                        "type": "string",
-                        "format": "date-time"
-                    }
-                },
-                "type": "object"
-            }
-        },
-        "securitySchemes": {
-            "bearerToken": {
-                "type": "http",
-                "description": "Access token obtido na autenticação",
-                "name": "Authorization",
-                "in": "header",
-                "bearerFormat": "JWT",
-                "scheme": "bearer"
             }
         }
     },
     "tags": [
         {
-            "name": "User",
-            "description": "User"
+            "name": "Users",
+            "description": "Users"
+        },
+        {
+            "name": "Admins",
+            "description": "Admins"
         }
     ]
 }
