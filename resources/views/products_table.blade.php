@@ -18,7 +18,14 @@
             <input type="text" name="description" required class="border rounded px-2 py-1 w-full">
 
             <label>Categoria:</label>
-            <input type="text" name="category" required class="border rounded px-2 py-1 w-full">
+            <select name="category" required class="border rounded px-2 py-1 w-full">
+                <option value="" disabled selected>Selecione uma categoria</option>
+                <option value="Romance">Romance</option>
+                <option value="Ficção">Ficção</option>
+                <option value="Suspense">Suspense</option>
+                <option value="Terror">Terror</option>
+                <option value="Aventura">Aventura</option>
+            </select>
 
             <label>Preço Unitário:</label>
             <input type="number" step="0.01" name="unit_price" required class="border rounded px-2 py-1 w-full">
@@ -99,7 +106,14 @@
                             <label>Descrição:</label>
                             <input type="text" name="description" value="{{ $product->description }}" class="border rounded px-2 py-1 w-full">
                             <label>Categoria:</label>
-                            <input type="text" name="category" value="{{ $product->category }}" class="border rounded px-2 py-1 w-full">
+                            <select name="category" class="border rounded px-2 py-1 w-full">
+                                <option value="" disabled>Selecione uma categoria</option>
+                                <option value="Romance" {{ $product->category == 'Romance' ? 'selected' : '' }}>Romance</option>
+                                <option value="Ficção" {{ $product->category == 'Ficção' ? 'selected' : '' }}>Ficção</option>
+                                <option value="Suspense" {{ $product->category == 'Suspense' ? 'selected' : '' }}>Suspense</option>
+                                <option value="Terror" {{ $product->category == 'Terror' ? 'selected' : '' }}>Terror</option>
+                                <option value="Aventura" {{ $product->category == 'Aventura' ? 'selected' : '' }}>Aventura</option>
+                            </select>
                             <label>Preço Unitário:</label>
                             <input type="text" name="unit_price" value="{{ $product->unit_price }}" class="border rounded px-2 py-1 w-full">
                             <label>Quantidade:</label>

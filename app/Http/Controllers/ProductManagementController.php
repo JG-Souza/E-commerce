@@ -63,8 +63,10 @@ class ProductManagementController extends Controller
 
         $product->update($data);
 
-        // se for admin, redirecionar par admin, se nao, nao
-        return redirect()->route('admin.index.products')->with('success', 'Produto atualizado com sucesso!');
+        if(Auth::guard('admin')->check())
+            return redirect()->route('admin.index.products')->with('success', 'Produto atualizado com sucesso!');
+        else
+            return redirect()->route('index.products')->with('success', 'Produto atualizado com sucesso!');
     }
 
 
@@ -72,6 +74,9 @@ class ProductManagementController extends Controller
     {
         $product->delete();
 
-        return redirect()->route('admin.index.products');
+        if(Auth::guard('admin')->check())
+            return redirect()->route('admin.index.products');
+        else
+        return redirect()->route('index.products');
     }
 }

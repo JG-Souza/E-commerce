@@ -18,7 +18,14 @@
             <div class="text-gray-600">Valor Total: R$ {{ number_format($cartItem->total_value, 2, ',', '.') }}</div>
             <span class="text-gray-600">Quantidade: {{ $cartItem->quantity }}</span>
         </div>
-        <button class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Remover</button>
+        <form action="{{ route('cart.remove', $cartItem->product->id) }}" method="POST">
+        @csrf
+        @method('DELETE')
+
+        <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
+            Remover
+        </button>
+        </form>
     </div>
     @endforeach
 

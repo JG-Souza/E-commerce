@@ -33,14 +33,20 @@ class AdminFactory extends Factory
             'remember_token' => Str::random(10),
             'logradouro' => $this->faker->streetName(),
             'numero' => $this->faker->randomNumber(3),
-            'bairro' => $this->faker->city(),
+            'bairro' => $this->faker->randomElement([
+                'Centro', 'Jardins', 'Vila Madalena', 'Copacabana', 'Moema', 'Boa Viagem', 'Leblon', 'Ipanema', 'Santana', 'Barra da Tijuca'
+            ]),
             'city' => $this->faker->city(),
-            'state' => $this->faker->lexify('??'),
+            'state' => $this->faker->randomElement([
+                'AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA',
+                'MT', 'MS', 'MG', 'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN',
+                'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO'
+            ]),
             'cep' => $this->faker->postcode(),
             'country' => $this->faker->country(),
             'phone' => $this->faker->phoneNumber(),
             'birth_date' => $this->faker->date(),
-            'cpf' => $this->faker->numberBetween(100000000, 999999999),
+            'cpf' => $this->faker->numberBetween(100000000, 999999999), // Gambiarra
             'img_path' => $imagePath
         ];
     }

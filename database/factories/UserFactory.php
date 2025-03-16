@@ -30,15 +30,21 @@ class UserFactory extends Factory
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
             'logradouro' => fake()->streetName(),
-            'numero' => fake()->randomNumber(3), // Foi o que serviu
-            'bairro' => fake()->city(), // Improvisado também
-            'city' => fake()->city(),
-            'state' => fake()->lexify('??'), // Gambiarra
+            'numero' => fake()->randomNumber(3),
+            'bairro' => $this->faker->randomElement([
+                'Centro', 'Jardins', 'Vila Madalena', 'Copacabana', 'Moema', 'Boa Viagem', 'Leblon', 'Ipanema', 'Santana', 'Barra da Tijuca'
+            ]),
+            'city' => $this->faker->city(),
+            'state' => $this->faker->randomElement([
+                'AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA',
+                'MT', 'MS', 'MG', 'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN',
+                'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO'
+            ]),
             'cep' => fake()->postcode(),
             'country' => fake()->country(),
             'phone' => fake()->phoneNumber(),
             'birth_date' => fake()->date(),
-            'cpf' => fake()->numberBetween(100000000, 999999999), // Gambiarra
+            'cpf' => fake()->numberBetween(100000000, 999999999),
         ];
     }
 

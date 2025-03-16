@@ -39,11 +39,11 @@ class ProductFactory extends Factory
 
         return [
             'name' => $this->faker->words(3, true),
-            'unit_price' => $this->faker->randomFloat(2, 10, 1000),
+            'unit_price' => $this->faker->randomFloat(2, 10, 100),
             'quantity' => $this->faker->numberBetween(1, 20),
             'description' => $this->faker->paragraph(),
             'category' => $this->faker->randomElement(['Romance', 'Ficção', 'Suspense', 'Terror', 'Aventura']),
-            'img_path' => $imagePath, // Caminho relativo ao diretório public
+            'img_path' => $imagePath,
             'users_id' => User::factory(),
         ];
     }

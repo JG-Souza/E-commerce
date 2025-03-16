@@ -83,6 +83,43 @@ class CartController extends Controller
 
     public function purchaseError()
     {
-        return "oi";
+        return "erro na compra";
+    }
+
+    public function removeItem($productId)
+    {
+        $user = Auth::user();
+
+        // Busca a transação "pendente" associada ao usuário
+        $transaction = Transaction::where('status', 'pending')
+                                ->whereHas('users', function ($query) use ($user) {
+                                    $query->where('users.id', $user->id);
+                                })
+                                ->first();
+
+        if (!$transaction) {
+            return redirect()->route('cart')->with('error', 'Carrinho não encontrado.');
+        }
+
+        $cartItem = TransactionItem::where('transactions_id', $transaction->id)
+                                ->where('products_id', $productId)
+                                ->first();
+
+        if ($cartItem) {
+            $cartItem->delete(); // Remove o item do carrinho
+
+            // Atualiza o total do carrinho após a remoção do item
+            $transaction->total_value = $transaction->items()->sum('total_value');
+            $transaction->save();
+        }
+
+        // Verifica se o carrinho ficou vazio
+        if ($transaction->items()->count() === 0) {
+            // Se o carrinho estiver vazio, exclui a transação
+            $transaction->delete();
+            return redirect()->route('cart')->with('message', 'Carrinho vazio, transação excluída!');
+        }
+
+        return redirect()->route('cart')->with('message', 'Produto removido do carrinho!');
     }
 }

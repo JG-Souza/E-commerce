@@ -73,6 +73,10 @@ Route::get('/erro-pagamento', [CartController::class, 'purchaseError'])
 Route::post('/checkout', [PagSeguroController::class, 'createCheckout'])
 ->middleware(['auth', 'verified']);
 
+Route::delete('/cart/{productId}', [CartController::class, 'removeItem'])
+->middleware(['auth', 'verified'])
+->name('cart.remove');
+
 
 // Barra de pesquisa
 Route::get('/products/search', [ProductController::class, 'search'])->name('products.search');
