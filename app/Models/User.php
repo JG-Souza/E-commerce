@@ -51,6 +51,6 @@ class User extends Authenticatable
 
     public function transactions()
     {
-        return $this->belongsToMany(Transaction::class, 'relation_transaction_users', 'user_id', 'transaction_id');
+        return $this->belongsToMany(Transaction::class, 'relation_transaction_users', 'user_id', 'transactions_id');
     }
 }

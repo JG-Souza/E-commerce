@@ -84,6 +84,28 @@
                             </x-dropdown-link>
                         @endif
 
+                        @if(Auth::guard('web')->check())
+                            <x-dropdown-link :href="route('users.compras')">
+                                Histórico de compras
+                            </x-dropdown-link>
+                        @endif
+
+                        @if(Auth::guard('admin')->check())
+                            <x-dropdown-link :href="route('admin.vendas')">
+                                Histórico de Vendas
+                            </x-dropdown-link>
+                        @else
+                            <x-dropdown-link :href="route('users.vendas')">
+                                Histórico de Vendas
+                            </x-dropdown-link>
+                        @endif
+
+                        @if(Auth::guard('admin')->check())
+                            <x-dropdown-link :href="route('contact.index')">
+                                Contato
+                            </x-dropdown-link>
+                        @endif
+
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf

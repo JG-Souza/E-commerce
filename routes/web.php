@@ -9,6 +9,8 @@ use App\Http\Controllers\ProductManagementController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\HistoricoController;
+use App\Http\Controllers\ContactController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -132,3 +134,30 @@ Route::middleware(AdminMiddleware::class)->prefix('/admin')->group(function () {
     Route::put('/pruducts/{product}', [ProductManagementController::class, 'update'])->name('admin.products.update');
     Route::delete('/pruducts/{product}', [ProductManagementController::class, 'destroy'])->name('admin.products.destroy');
 });
+
+// Users Historicos
+Route::middleware('auth')->group(function () {
+    Route::get('/vendas', [HistoricoController::class, 'vendas'])->name('users.vendas');
+    Route::get('/compras', [HistoricoController::class, 'compras'])->name('users.compras');
+});
+
+
+// Admin Historico vendas
+Route::get('/admin/vendas', [HistoricoController::class, 'vendas'])
+->middleware(AdminMiddleware::class)
+->name('admin.vendas');
+
+
+// Envio de Email
+Route::get('contact',[ContactController::class,'index'])
+->middleware(AdminMiddleware::class)
+->name('contact.index');
+
+Route::post('contact',[ContactController::class,'store'])
+->middleware(AdminMiddleware::class)
+->name('contact.store');
+
+
+// Gerar pdfs
+Route::get('/vendas/pdf', [HistoricoController::class, 'gerarPdfVendas'])->name('admin.vendas.pdf');
+Route::get('/compras/pdf', [HistoricoController::class, 'gerarPdfCompras'])->name('user.compras.pdf');

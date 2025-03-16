@@ -2,9 +2,7 @@
     <div class="py-8">
         <div class="max-w-5xl mx-auto bg-white shadow-lg rounded-lg p-8 flex gap-8">
             <!-- Imagem do produto -->
-            <img src="{{ asset($product->img_path) }}"
-                 alt="{{ $product->name }}"
-                 class="w-64 h-80 object-cover rounded-lg">
+            <img src="{{ asset('storage/' . $product->img_path) }}" alt="{{ $product->name }}" class="w-64 h-80 object-cover rounded-lg">
 
             <!-- Informações do produto -->
             <div class="flex flex-col flex-1">

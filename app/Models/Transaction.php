@@ -32,5 +32,12 @@ class Transaction extends Model
         return $this->hasMany(RelationTransactionUser::class, 'transactions_id')
                     ->where('role', 'seller');
     }
+
+    public function customer()
+    {
+        return $this->belongsToMany(User::class, 'relation_transaction_users', 'transactions_id', 'users_id')
+                    ->where('role', 'customer');
+    }
+
 }
 

@@ -11,7 +11,7 @@
 
     @foreach ($cartItems as $cartItem)
     <div class="bg-gray-100 rounded-lg p-6 flex items-center gap-6 mb-6">
-        <img src="{{ $cartItem->product->img_path }}" alt="{{ $cartItem->product->name }}" class="w-24 h-24 object-cover rounded-lg">
+    <img src="{{ asset('storage/' . $cartItem->product->img_path) }}" alt="{{ $cartItem->product->name }}" class="w-24 h-24 object-cover rounded-lg">
         <div class="flex-1">
             <span class="text-xl font-semibold">{{ $cartItem->product->name }}</span>
             <div class="text-gray-600">Valor Unitário: R$ {{ number_format($cartItem->product->unit_price, 2, ',', '.') }}</div>
