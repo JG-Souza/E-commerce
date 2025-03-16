@@ -16,7 +16,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($users as $user)
+                    @forelse ($users as $user)
                     <tr class="border-b border-gray-200">
                         <td class="px-6 py-3 text-sm text-center">{{ $user->id }}</td>
                         <td class="px-6 py-3 text-sm text-center">{{ $user->name }}</td>
@@ -269,7 +269,11 @@
 
 
 
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="4" class="px-6 py-3 text-center text-gray-500">Nenhum usuario encontrado.</td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>

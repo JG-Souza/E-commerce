@@ -14,7 +14,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($products as $product)
+                    @forelse ($products as $product)
                     <tr class="border-b border-gray-200">
                         <td class="px-6 py-3 text-sm text-center">{{ $product->id }}</td>
                         <td class="px-6 py-3 text-sm text-center">{{ $product->name }}</td>
@@ -89,7 +89,11 @@
                             <button type="button" onclick="document.getElementById('modalDelete-{{ $product->id }}').close()" class="px-4 py-2 bg-gray-500 text-white rounded">Cancelar</button>
                         </form>
                     </dialog>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="4" class="px-6 py-3 text-center text-gray-500">Nenhum usuario encontrado.</td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>

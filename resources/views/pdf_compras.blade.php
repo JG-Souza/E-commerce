@@ -38,7 +38,7 @@
                     <tr>
                         <td></td>
                         <td>{{ $item->product->name }}</td>
-                        <td>{{ $item->product->category->name}}</td>
+                        <td>{{ $item->product->category}}</td>
                         <td>{{ $item->quantity }}</td>
                         <td>R$ {{ number_format($item->product->unit_price, 2, ',', '.') }}</td>
                         <td>R$ {{ number_format($item->total_value, 2, ',', '.') }}</td>
