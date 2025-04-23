@@ -36,10 +36,11 @@ class ProductController extends Controller
 
     public function search(Request $request)
     {
+        $userId = Auth::guard('web')->id();
         $searchTerm = $request->input('search');
         $category = $request->input('categoria');
 
-        $products = Product::query()
+        $products = Product::where('users_id', '!=', $userId)
         ->where('quantity', '>', 0);
 
         if($searchTerm)
@@ -49,6 +50,9 @@ class ProductController extends Controller
             $products = $products->where('category', $category);
 
         $products = $products->paginate(12)->appends($request->query()); // Mantém os parâmetros na paginação
+
+        if (Auth::guard('admin')->check()) // Indica que a rota deve começar com admin/ e pode ser seguida de qualquer coisa
+            return view('admin.dashboard', compact('products'));
 
         return view('dashboard', compact('products'));
     }

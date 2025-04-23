@@ -17,13 +17,14 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory(18)->create();
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@test.com',
+        Admin::factory()->state([
+            'name' => 'Joao Gabriel',
+            'email' => 'joaogsouzafma@gmail.com',
             'password' => Hash::make('password'),
-        ]);
+        ])->create();
+
+
+        User::factory(18)->create();
 
         Admin::factory(6)->create();
 
