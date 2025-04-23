@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('city', 50);
             $table->char('state', 2);
             $table->string('cep', 10);
-            $table->string('country', 50);
+            $table->string('country', 100);
             $table->string('phone', 20);
             $table->dateTime('birth_date')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->char('cpf', 11)->unique();
@@ -42,7 +42,7 @@ return new class extends Migration
             $table->string('city', 50);
             $table->char('state', 2);
             $table->string('cep', 10);
-            $table->string('country', 50);
+            $table->string('country', 100);
             $table->string('phone', 20);
             $table->dateTime('birth_date')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->char('cpf', 11)->unique();
@@ -58,7 +58,7 @@ return new class extends Migration
             $table->string('category', 45);
             $table->string('img_path', 255);
             $table->timestamps();
-            $table->foreignId('users_id')->constrained('users')->onDelete('cascade'); // Preciso entender melhor o método constrained
+            $table->foreignId('users_id')->constrained('users')->onDelete('cascade');
         });
 
 

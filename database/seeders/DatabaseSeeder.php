@@ -23,8 +23,16 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('password'),
         ])->create();
 
+        User::factory()->state([
+            'name' => 'Joao Gabriel',
+            'email' => 'joao@joao',
+            'password' => Hash::make('password'),
+        ])->create();
 
-        User::factory(18)->create();
+
+        User::factory(18)->state([
+            'password' => Hash::make('password'),
+        ])->create();
 
         Admin::factory(6)->create();
 

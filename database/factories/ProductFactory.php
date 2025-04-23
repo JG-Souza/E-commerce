@@ -44,7 +44,7 @@ class ProductFactory extends Factory
             'description' => $this->faker->paragraph(),
             'category' => $this->faker->randomElement(['Romance', 'Ficção', 'Suspense', 'Terror', 'Aventura']),
             'img_path' => $imagePath,
-            'users_id' => User::factory(),
+            'users_id' => User::inRandomOrder()->first()->id,
         ];
     }
 }
