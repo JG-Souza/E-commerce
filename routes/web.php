@@ -17,6 +17,10 @@ Route::get('/', function () {
     return redirect('login');
 });
 
+Route::get('/register', function () {
+    return redirect('login');
+});
+
 // Dashboards
 Route::get('/dashboard', [ProductController::class, 'index'])
     ->middleware(['auth', 'verified'])
