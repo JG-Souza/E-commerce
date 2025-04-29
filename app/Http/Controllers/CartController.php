@@ -78,13 +78,67 @@ class CartController extends Controller
         $transaction->total_value = $transaction->items()->sum('total_value');
         $transaction->save();
 
-        return redirect()->route('cart')->with('message', 'Produto adicionado ao carrinho!');
+        return redirect()->route('cart')->with([
+            'message' => 'Produto adicionado ao carrinho com sucesso!',
+            'message_type' => 'success'
+        ]);
+
+    }
+
+    public function updateQuantity(Request $request, $productId, $action)
+    {
+        $user = Auth::user();
+
+        $transaction = Transaction::where('status', 'pending')
+            ->whereHas('users', fn($query) => $query->where('users.id', $user->id))
+            ->first();
+
+        if (!$transaction) {
+            return redirect()->route('cart')->with('error', 'Carrinho não encontrado.');
+        }
+
+        $cartItem = TransactionItem::where('transactions_id', $transaction->id)
+            ->where('products_id', $productId)
+            ->first();
+
+        if (!$cartItem) {
+            return redirect()->route('cart')->with('error', 'Produto não encontrado no carrinho.');
+        }
+
+        if ($action === 'increase') {
+            $cartItem->quantity += 1;
+        } elseif ($action === 'decrease') {
+            $cartItem->quantity -= 1;
+        }
+
+        if ($cartItem->quantity <= 0) {
+            $cartItem->delete();
+        } else {
+            $cartItem->total_value = $cartItem->quantity * $cartItem->product->unit_price;
+            $cartItem->save();
+        }
+
+        // Atualiza o total do carrinho
+        $transaction->total_value = $transaction->items()->sum('total_value');
+        $transaction->save();
+
+        // Remove a transação se ficar vazia
+        if ($transaction->items()->count() === 0) {
+            $transaction->delete();
+            return redirect()->route('cart')->with('message', 'Carrinho vazio, transação excluída!');
+        }
+
+        return redirect()->route('cart')->with('message', 'Quantidade atualizada com sucesso!');
     }
 
     public function purchaseError()
     {
-        return "erro na compra";
+        return response()->json([
+            'error' => 'Erro na compra',
+            'message' => 'Ocorreu um erro inesperado ao tentar processar sua compra. Por favor, tente novamente mais tarde.'
+        ], 500);
     }
+
 
     public function removeItem($productId)
     {

@@ -17,18 +17,11 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        Admin::factory()->state([
+        User::factory()->state([
             'name' => 'Joao Gabriel',
             'email' => 'joaogsouzafma@gmail.com',
             'password' => Hash::make('password'),
         ])->create();
-
-        User::factory()->state([
-            'name' => 'Joao Gabriel',
-            'email' => 'joao@joao',
-            'password' => Hash::make('password'),
-        ])->create();
-
 
         User::factory(18)->state([
             'password' => Hash::make('password'),

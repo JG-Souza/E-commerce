@@ -81,6 +81,11 @@ Route::delete('/cart/{productId}', [CartController::class, 'removeItem'])
 ->middleware(['auth', 'verified'])
 ->name('cart.remove');
 
+Route::post('/cart/update/{productId}/{action}', [CartController::class, 'updateQuantity'])
+->middleware(['auth', 'verified'])
+->name('cart.update');
+
+
 
 // Barra de pesquisa
 Route::get('/products/search', [ProductController::class, 'search'])->name('products.search');
