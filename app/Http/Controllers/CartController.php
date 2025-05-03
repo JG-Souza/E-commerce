@@ -15,11 +15,7 @@ class CartController extends Controller
         $user = Auth::user();
 
         // Busca a transação "pendente" associada ao carrinho do usuário
-        $transaction = Transaction::where('status', 'pending')
-                                ->whereHas('users', function ($query) use ($user) { // Esse método é usado para filtrar registros baseados em um relacionamento
-                                    $query->where('users.id', $user->id); // sem a função anonima eu nao teria acesso a variavel $user
-                                })
-                                ->first();
+        $transaction = $this->getUserPendingTransaction($user);
 
         // Se existir a transação, pega os itens; caso contrário, cria um array vazio
         $cartItems = $transaction ? $transaction->items : []; // Uso de Operador ternário
@@ -35,11 +31,7 @@ class CartController extends Controller
         $quantity = $request->input('quantity', 1);  // Obtém a quantidade selecionada, padrão é 1
 
         // Verifica se o usuário já tem um carrinho
-        $transaction = Transaction::where('status', 'pending')
-                                  ->whereHas('users', function ($query) use ($user) {
-                                      $query->where('users.id', $user->id);
-                                  })
-                                  ->first();
+        $transaction = $this->getUserPendingTransaction($user);
 
         // Se não existir um carrinho, cria um novo
         if (!$transaction) {
@@ -75,23 +67,19 @@ class CartController extends Controller
         }
 
         // Atualiza o valor total do carrinho
-        $transaction->total_value = $transaction->items()->sum('total_value');
-        $transaction->save();
+        $this->updateTransactionTotal($transaction);
 
         return redirect()->route('cart')->with([
             'message' => 'Produto adicionado ao carrinho com sucesso!',
             'message_type' => 'success'
         ]);
-
     }
 
     public function updateQuantity(Request $request, $productId, $action)
     {
         $user = Auth::user();
 
-        $transaction = Transaction::where('status', 'pending')
-            ->whereHas('users', fn($query) => $query->where('users.id', $user->id))
-            ->first();
+        $transaction = $this->getUserPendingTransaction($user);
 
         if (!$transaction) {
             return redirect()->route('cart')->with('error', 'Carrinho não encontrado.');
@@ -119,8 +107,7 @@ class CartController extends Controller
         }
 
         // Atualiza o total do carrinho
-        $transaction->total_value = $transaction->items()->sum('total_value');
-        $transaction->save();
+        $this->updateTransactionTotal($transaction);
 
         // Remove a transação se ficar vazia
         if ($transaction->items()->count() === 0) {
@@ -139,41 +126,16 @@ class CartController extends Controller
         ], 500);
     }
 
-
-    public function removeItem($productId)
+    private function getUserPendingTransaction($user)
     {
-        $user = Auth::user();
+        return Transaction::where('status', 'pending')
+                        ->whereHas('users', fn($query) => $query->where('users.id', $user->id)) // Esse método é usado para filtrar registros baseados em um relacionamento
+                        ->first(); // sem a função anonima eu nao teria acesso a variavel $user
+    }
 
-        // Busca a transação "pendente" associada ao usuário
-        $transaction = Transaction::where('status', 'pending')
-                                ->whereHas('users', function ($query) use ($user) {
-                                    $query->where('users.id', $user->id);
-                                })
-                                ->first();
-
-        if (!$transaction) {
-            return redirect()->route('cart')->with('error', 'Carrinho não encontrado.');
-        }
-
-        $cartItem = TransactionItem::where('transactions_id', $transaction->id)
-                                ->where('products_id', $productId)
-                                ->first();
-
-        if ($cartItem) {
-            $cartItem->delete(); // Remove o item do carrinho
-
-            // Atualiza o total do carrinho após a remoção do item
-            $transaction->total_value = $transaction->items()->sum('total_value');
-            $transaction->save();
-        }
-
-        // Verifica se o carrinho ficou vazio
-        if ($transaction->items()->count() === 0) {
-            // Se o carrinho estiver vazio, exclui a transação
-            $transaction->delete();
-            return redirect()->route('cart')->with('message', 'Carrinho vazio, transação excluída!');
-        }
-
-        return redirect()->route('cart')->with('message', 'Produto removido do carrinho!');
+    private function updateTransactionTotal($transaction)
+    {
+        $transaction->total_value = $transaction->items()->sum('total_value');
+        $transaction->save();
     }
 }
